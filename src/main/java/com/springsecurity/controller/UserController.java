@@ -1,6 +1,7 @@
 package com.springsecurity.controller;
 
 import com.springsecurity.domain.dto.UserJoinRequest;
+import com.springsecurity.domain.dto.UserLoginRequest;
 import com.springsecurity.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +21,11 @@ public class UserController {
     public ResponseEntity<String> join(@RequestBody UserJoinRequest dto){
         userService.join(dto.getUserName(), dto.getPassword());
         return ResponseEntity.ok().body("회원가입이 성공 했습니다.");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLoginRequest dto){
+        String token = userService.login(dto.getUserName(), dto.getPassword());
+        return ResponseEntity.ok().body(token);
     }
 }

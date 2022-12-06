@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,6 +39,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName(("회원가입 성공"))
+    @WithMockUser
     void join() throws Exception {
         String userName = "YeonJae";
         String password = "qwer1234";
@@ -68,7 +70,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName(("로그인 성공"))
-    @WithAnonymousUser
+    @WithMockUser
     void login_success() throws Exception {
         String userName = "YeonJae";
         String password = "qwer1234";
@@ -86,7 +88,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName(("로그인 실패 - userName 없음"))
-    @WithAnonymousUser
+    @WithMockUser
     void login_fail1() throws Exception {
         String userName = "YeonJae";
         String password = "qwer1234";
@@ -104,7 +106,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName(("로그인 실패 - password 가 틀린 경우"))
-    @WithAnonymousUser
+    @WithMockUser
     void login_fail2() throws Exception {
         String userName = "YeonJae";
         String password = "qwer1234";
@@ -114,6 +116,7 @@ class UserControllerTest {
 
 
         mockMvc.perform(post("/api/v1/users/login")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new UserLoginRequest(userName, password))))
                 .andDo(print())
