@@ -6,16 +6,17 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
 
-public class JwtTokenUtil {
+public class JwtUtil {
+    //토큰 발행
     public static String createToken(String userName, String key, long expireTimeMs){
         Claims claims = Jwts.claims();  //일종의 map
         claims.put("userName", userName);
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setIssuedAt(new Date(System.currentTimeMillis())) //오늘 날짜 넣어주기
                 .setExpiration(new Date(System.currentTimeMillis()+expireTimeMs))
-                .signWith(SignatureAlgorithm.HS256, key)
+                .signWith(SignatureAlgorithm.HS256, key) //키 생성 알고리즘 정해주기
                 .compact();
     }
 }

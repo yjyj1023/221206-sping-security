@@ -4,7 +4,7 @@ import com.springsecurity.domain.User;
 import com.springsecurity.exception.AppException;
 import com.springsecurity.exception.ErrorCode;
 import com.springsecurity.repository.UserRepository;
-import com.springsecurity.utils.JwtTokenUtil;
+import com.springsecurity.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +52,7 @@ public class UserService {
         }
 
         //토큰 발행
-        String token = JwtTokenUtil.createToken(selectedUser.getUserName(), key, expireTimeMs);
+        String token = JwtUtil.createToken(selectedUser.getUserName(), key, expireTimeMs);
 
 
         return token;
