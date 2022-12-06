@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/reviews")
 public class ReviewController {
     @PostMapping
     public ResponseEntity<String> writeReview(){
